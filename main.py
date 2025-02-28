@@ -99,7 +99,7 @@ def answer_questions(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)  # small pause before waiting for the second popup
-    
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     # Wait for the second submit button popup to appear and click it
     submit_button2 = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
@@ -176,7 +176,7 @@ def answer_questions_second(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
-    
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -199,8 +199,6 @@ def answer_questions_third(driver):
     )
     
     # Define a dictionary mapping unique parts of the question text to the expected letter
-    # Expected answers (using ก:0, ข:1, ค:2, ง:3): 
-    # [Q1: ง, Q2: ค, Q3: ก, Q4: ง, Q5: ข, Q6: ค, Q7: ง, Q8: ง, Q9: ก, Q10: ข]
     answer_dict3 = {
         "ป้องกันการโจรกรรมอัตลักษณ์ตัวตนบนโลกไซเบอร์": "ถูกทุกข้อ",
         "หลักการตั้งรหัสผ่านที่เหมาะสมที่สุด": "นายแสนตีตั้งรหัสผ่านที่มีตัวอักษร ตัวเล็กตัวใหญ่ สัญลักษณ์ และตัวเลข เช่น @Aom99",
@@ -254,7 +252,7 @@ def answer_questions_third(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
-    
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -277,7 +275,6 @@ def answer_questions_four(driver):
     )
     
     # Define dictionary mapping unique question text snippets to the expected answer letter
-    # Using ก:0, ข:1, ค:2, ง:3
     answer_dict4 = {
         "ไม่ใช่ พฤติกรรมการละเมิดสิทธิ": "พัฒนานวัตกรรมหรือเทคโนโลยีใหม่จากสิ่งที่มีอยู่เดิม",
         "ตัวเราถูกละเมิดสิทธิ": "แจ้งความและดำเนินคดีตามกฎหมาย",
@@ -330,7 +327,8 @@ def answer_questions_four(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
-    
+    # Wait for potential overlay or transition before clicking the second submit button
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -352,7 +350,7 @@ def answer_questions_five(driver):
        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.test-question.question"))
     )
     
-    # Dictionary for course 5 answers using ก:0, ข:1, ค:2, ง:3
+
     answer_dict5 = {
         "ความหมายของการรักษาความปลอดภัยด้านไซเบอร์": "ถูกทุกข้อ",
         "เอกสารข้อมูลส่วนตัว": "ถูกทุกข้อ",
@@ -407,6 +405,8 @@ def answer_questions_five(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    # Modified region: re-find submit_button2 to avoid stale element error
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -462,7 +462,7 @@ def answer_questions_six(driver):
         for choice in choices:
             full_choice = choice.text.strip()
             if len(full_choice) > 2 and full_choice[1] == '.':
-                full_choice = full_choice[2:].strip()
+                full_choice = full_choice[2:].strip()  # changed from .trip() to .strip()
             if full_choice.lower() == expected_letter.lower():
                 print(f"Course 6 - Selecting choice for expected letter {expected_letter}: {full_choice}")
                 driver.execute_script("arguments[0].scrollIntoView(true);", choice)
@@ -481,6 +481,7 @@ def answer_questions_six(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -527,7 +528,7 @@ def answer_questions_seven(driver):
         for choice in choices:
             full_choice = choice.text.strip()
             if len(full_choice) > 2 and full_choice[1] == '.':
-                full_choice = full_choice[2:].strip()
+                full_choice = full_choice[2:].strip()  # changed from .trip() to .strip()
             if full_choice.lower() == expected_letter.lower():
                 driver.execute_script("arguments[0].scrollIntoView(true);", choice)
                 for _ in range(2):  # force click twice
@@ -543,6 +544,7 @@ def answer_questions_seven(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -605,6 +607,7 @@ def answer_questions_eight(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -671,6 +674,7 @@ def answer_questions_nine(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -689,13 +693,14 @@ def answer_questions_ten(driver):
     )
     # Fixed answer mapping for course 10 (using full answer texts)
     answer_dict10 = {
-        "ข้อมูลที่โพสต์หรือแชร์ไปแล้ว": "Cloud Storage",
+        "ข้อมูลที่โพสต์หรือแชร์ไปแล้ว": "Server ของผู้ให้บริการอินเทอร์เน็ต",
         "ข้อใด คือ Passive Digital Footprint": "ประวัติการค้นหาบนอินเทอร์เน็ต",
         "การตั้งค่าความเป็นส่วนตัวในโซเชียลมีเดียมีประโยชน์อย่างไร": "ป้องกันการเข้าถึงข้อมูลจากผู้ที่ไม่ได้รับอนุญาต",
         "ข้อใด ไม่ใช่ วิธีการป้องกันการทิ้งรอยดิจิทัลที่ไม่ปลอดภัย": "แชร์ข้อมูลส่วนตัวกับทุกคน",
         "การตั้งค่าความเป็นส่วนตัวไม่ให้เป็นสาธารณะช่วยป้องกันอะไร?": "การเข้าถึงข้อมูลส่วนตัวจากบุคคลที่ไม่เกี่ยวข้อง",
         "เพราะเหตุใดการเปิดเผยข้อมูลส่วนตัวมากเกินไปในโลกดิจิทัลจึงเป็นอันตราย": "ทำให้ผู้ไม่หวังดีสามารถสืบค้นและปลอมแปลงตัวตนได้ง่ายขึ้น",
         "Digital Footprint คือ": "การบันทึกข้อมูลทางดิจิทัลที่เกิดจากการโพสต์ แชร์ หรือป้อนข้อมูลเข้าสู่ระบบออนไลน์",
+        "ประวัติการค้นหาและ IP Address ของเราถือว่าเป็น Digital Footprint ประเภทใด?": "Passive Digital Footprint",
         "ข้อใดเป็นลักษณะของ Active Digital Footprint": "การกดไลก์โพสต์ของเพื่อน"
     }
     for container in question_containers:
@@ -732,6 +737,7 @@ def answer_questions_ten(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -810,6 +816,7 @@ def answer_questions_eleven(driver):
     
     time.sleep(1)
     
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -929,6 +936,7 @@ def answer_questions_twelve(driver):
     driver.execute_script("arguments[0].scrollIntoView(true);", submit_button1)
     submit_button1.click()
     time.sleep(1)
+    WebDriverWait(driver, 10).until(EC.staleness_of(submit_button1))
     submit_button2 = WebDriverWait(driver, 10).until(
          EC.element_to_be_clickable((By.XPATH, "(//button[@data-qa='btn-submit'])[1]"))
     )
@@ -940,7 +948,7 @@ def main():
     try:
         # your username and password 
         username = "YOUR_USERNAME"
-        password = "YOUR PASSWORD"
+        password = "YOUR_PASSWORD"
         
         login_and_navigate(driver, username, password)
 
